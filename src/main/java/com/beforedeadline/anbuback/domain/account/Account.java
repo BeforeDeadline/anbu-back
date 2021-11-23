@@ -1,5 +1,6 @@
 package com.beforedeadline.anbuback.domain.account;
 
+import com.beforedeadline.anbuback.domain.common.Period;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Account {
+public class Account extends Period {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
