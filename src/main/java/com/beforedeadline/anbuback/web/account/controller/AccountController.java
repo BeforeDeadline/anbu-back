@@ -17,8 +17,8 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping("/sign-in")
-    public SignInResponse signIn(@Validated @RequestBody SignInRequest signInRequest, BindingResult bindingResult){
+    @PostMapping("/signUp")
+    public SignInResponse signUp(@Validated @RequestBody SignInRequest signInRequest, BindingResult bindingResult){
 
         Account account = Account.builder()
                 .email(signInRequest.getEmail())
