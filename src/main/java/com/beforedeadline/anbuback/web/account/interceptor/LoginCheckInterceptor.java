@@ -12,8 +12,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
         if(session == null || session.getAttribute("id")==null){
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "로그인 하세요");
-            return false;
+            throw new IllegalArgumentException("로그인이 되어있지 않습니다.");
         }
         return true;
     }

@@ -35,7 +35,7 @@ public class LoginController {
     public ResponseEntity<String> logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session == null){
-            return new ResponseEntity<>("세션이 만료되었습니다", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("로그인 해주세요");
         }
         session.invalidate();
         return ResponseEntity.ok("ok");

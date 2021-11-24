@@ -15,12 +15,23 @@ public class AccountService {
 
     @Transactional
     public void save(Account account){
+        findByEmail(account.getEmail()).ifPresent((a) -> {
+            throw new IllegalArgumentException("이미 등록된 이메일입니다");
+        });
+        findByNickname(account.getNickname()).ifPresent((a) -> {
+            throw new IllegalArgumentException("이미 등록된 닉네임입니다");
+        });
         accountRepository.save(account);
     }
 
     @Transactional
     public Optional<Account> findByEmail(String email){
         return accountRepository.findByEmail(email);
+    }
+
+    @Transactional
+    public Optional<Account> findByNickname(String nickname){
+        return accountRepository.findByNickname(nickname);
     }
 
     @Transactional
