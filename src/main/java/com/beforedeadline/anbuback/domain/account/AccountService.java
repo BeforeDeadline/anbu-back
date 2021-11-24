@@ -24,15 +24,19 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    @Transactional
     public Optional<Account> findByEmail(String email){
         return accountRepository.findByEmail(email);
     }
 
-    @Transactional
     public Optional<Account> findByNickname(String nickname){
         return accountRepository.findByNickname(nickname);
     }
+
+    public Optional<Account> findById(Long id){
+        return accountRepository.findById(id);
+    }
+
+
 
     @Transactional
     public Account login(String email, String password){
