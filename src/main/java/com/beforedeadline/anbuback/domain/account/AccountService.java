@@ -32,11 +32,9 @@ public class AccountService {
         return accountRepository.findByNickname(nickname);
     }
 
-    public Optional<Account> findById(Long id){
-        return accountRepository.findById(id);
+    public Account findById(Long id){
+        return accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("account id를 제대로 입력하세요"));
     }
-
-
 
     @Transactional
     public Account login(String email, String password){

@@ -40,6 +40,6 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             return Optional.empty();
         }
 
-        return accountService.findById((Long) session.getAttribute("id")).orElseThrow(() -> new IllegalArgumentException("로그인이 되어있지 않습니다"));
+        return accountService.findById((Long) session.getAttribute("id"));
     }
 }

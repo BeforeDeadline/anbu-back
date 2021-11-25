@@ -1,10 +1,12 @@
 package com.beforedeadline.anbuback.web.friend.dto;
 
+import com.beforedeadline.anbuback.web.tag.dto.TagResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,4 +22,6 @@ public class FriendResponse {
     private LocalDateTime birthday;
 
     private int lastContracted;
+
+    private List<TagResponse> tags;
 }

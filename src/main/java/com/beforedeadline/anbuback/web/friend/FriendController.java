@@ -3,9 +3,11 @@ package com.beforedeadline.anbuback.web.friend;
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.friend.Friend;
 import com.beforedeadline.anbuback.domain.friend.FriendService;
+import com.beforedeadline.anbuback.domain.tag.TagService;
 import com.beforedeadline.anbuback.web.account.annotation.Login;
 import com.beforedeadline.anbuback.web.friend.dto.FriendCreateRequest;
 import com.beforedeadline.anbuback.web.friend.dto.FriendResponse;
+import com.beforedeadline.anbuback.web.tag.dto.TagResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,9 +25,11 @@ import java.util.stream.Collectors;
 public class FriendController {
 
     private final FriendService friendService;
+    private final TagService tagService;
 
     @GetMapping
     public List<FriendResponse> getFriendsList (@Login Account account) {
+
         return friendService.findByAccount(account).stream().map((friend) -> {
             return FriendResponse.builder()
                     .id(friend.getId())
@@ -35,6 +39,14 @@ public class FriendController {
                     .lastContactedDate(friend.getLastContactedDate())
                     .birthday(friend.getBirthday())
                     .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
+                    .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                        return TagResponse.builder()
+                                .id(tag.getId())
+                                .name(tag.getName())
+                                .lastContractedDateTime(tag.getLastContractedDateTime())
+                                .contractCycle(tag.getContractCycle())
+                                .build();
+                    }).collect(Collectors.toList()))
                     .build();
         }).collect(Collectors.toList());
     }
@@ -49,6 +61,14 @@ public class FriendController {
                 .contractCycle(friend.getContactCycle())
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
+                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                        return TagResponse.builder()
+                            .id(tag.getId())
+                            .name(tag.getName())
+                            .lastContractedDateTime(tag.getLastContractedDateTime())
+                            .contractCycle(tag.getContractCycle())
+                            .build();
+                }).collect(Collectors.toList()))
                 .birthday(friend.getBirthday())
                 .build();
     }
@@ -79,6 +99,14 @@ public class FriendController {
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                 .birthday(friend.getBirthday())
+                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                    return TagResponse.builder()
+                            .id(tag.getId())
+                            .name(tag.getName())
+                            .lastContractedDateTime(tag.getLastContractedDateTime())
+                            .contractCycle(tag.getContractCycle())
+                            .build();
+                }).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
     }
 
@@ -92,6 +120,14 @@ public class FriendController {
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                 .birthday(friend.getBirthday())
+                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                    return TagResponse.builder()
+                            .id(tag.getId())
+                            .name(tag.getName())
+                            .lastContractedDateTime(tag.getLastContractedDateTime())
+                            .contractCycle(tag.getContractCycle())
+                            .build();
+                }).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
     }
 }

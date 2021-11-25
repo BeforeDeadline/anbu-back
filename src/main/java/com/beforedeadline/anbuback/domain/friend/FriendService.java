@@ -28,7 +28,7 @@ public class FriendService {
     }
 
     public Friend findById(Long friendId, Account account) {
-        Friend friend = repository.findById(friendId).orElseThrow(() -> new IllegalArgumentException("제대로 된 id를 밉력하세요"));
+        Friend friend = repository.findById(friendId).orElseThrow(() -> new IllegalArgumentException("제대로 된 friend id를 밉력하세요"));
         if(!friend.getAccount().getId().equals(account.getId())){
             throw new IllegalArgumentException("자신이 가지고 있는 account만 get할 수 있습니다.");
         }
