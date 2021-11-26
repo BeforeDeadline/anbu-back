@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/*.icon", "/error", "/login", "/logout", "/sign-up", "/");
+                .excludePathPatterns("/*.icon", "/error", "/login", "/logout", "/sign-up", "/", "/.well-known/pki-validation/fileauth.txt");
     }
 
     @Override
