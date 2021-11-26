@@ -23,13 +23,14 @@ public class AccountService {
         findByNickname(account.getNickname()).ifPresent((a) -> {
             throw new IllegalArgumentException("이미 등록된 닉네임입니다");
         });
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("SHA-256");
-//        } catch (NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//        }
-//
-//        account.getPassword()
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(account.getPassword().getBytes());
+            account.changePassword(new String(md.digest()));
+        } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+        }
+
         accountRepository.save(account);
     }
 
@@ -48,9 +49,18 @@ public class AccountService {
     @Transactional
     public Account login(String email, String password){
         Account account = findByEmail(email).orElseThrow(() -> new IllegalArgumentException("잘못된 이메일 입력"));
-        if(!account.getPassword().equals(password)) {
-            throw new IllegalArgumentException("잘못된 패스워드 입력");
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            String inputDigest = new String(md.digest());
+            if(!inputDigest.equals(account.getPassword())){
+                throw new IllegalArgumentException("잘못된 패스워드 입력");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
+
         return account;
     }
 

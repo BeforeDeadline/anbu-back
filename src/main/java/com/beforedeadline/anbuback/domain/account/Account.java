@@ -22,4 +22,8 @@ public class Account extends Period {
 
     @Column(unique = true, nullable = false)
     private String nickname;
+
+    public void changePassword(String password){
+        this.password = password;
+    }
 }

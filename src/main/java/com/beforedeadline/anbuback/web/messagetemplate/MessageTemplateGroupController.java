@@ -47,6 +47,4 @@ public class MessageTemplateGroupController {
                 )
                 .build()).collect(Collectors.toList());
     }
-
-
 }

@@ -25,4 +25,8 @@ public class MessageTemplateSituationService {
     public List<MessageTemplateSituation> findByGroupId(Long groupId) {
         return messageTemplateSituationRepository.findByGroupId(messageTemplateGroupService.findById(groupId));
     }
+
+    public MessageTemplateSituation findById(Long id){
+        return messageTemplateSituationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("제대로된 situation id를 입력하세요"));
+    }
 }
