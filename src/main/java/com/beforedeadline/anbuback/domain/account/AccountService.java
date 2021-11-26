@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,13 @@ public class AccountService {
         findByNickname(account.getNickname()).ifPresent((a) -> {
             throw new IllegalArgumentException("이미 등록된 닉네임입니다");
         });
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//        } catch (NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//        }
+//
+//        account.getPassword()
         accountRepository.save(account);
     }
 
