@@ -18,10 +18,10 @@ logging:
   level:
     org.hibernate.SQL: debug
 
-server:
-  port: 443
-  ssl:
-    key-store: keystore.p12
-    key-store-type: pkcs12
-    key-store-password: 123456
-    key-alias: spring
+#server:
+#  port: 443
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-type: pkcs12
+#    key-store-password: 123456
+#    key-alias: spring
