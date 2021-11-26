@@ -30,4 +30,8 @@ public class Tag extends Period {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    public void contact() {
+        lastContractedDateTime = LocalDateTime.now();
+    }
 }

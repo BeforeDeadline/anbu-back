@@ -35,4 +35,7 @@ public class Friend extends Period {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    public void contact() {
+        lastContactedDate = LocalDateTime.now();
+    }
 }

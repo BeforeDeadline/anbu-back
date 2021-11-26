@@ -15,6 +15,7 @@ public class TagResponse {
     private String name;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastContractedDateTime;
+    private int lastContracted;
     private int contractCycle;
     private Long friendNumber;
 }

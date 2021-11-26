@@ -26,12 +26,27 @@ public class TagController {
     private final TagService tagService;
     private final FriendTagService friendTagService;
 
+    // todo 태그 상세조회
+
+    @GetMapping("/d-day")
+    public List<TagResponse> getDDayTag(@Login Account account) {
+        return tagService.findAllDDayTags(account).stream().map(tag -> TagResponse.builder()
+                .id(tag.getId())
+                .name(tag.getName())
+                .lastContractedDateTime(tag.getLastContractedDateTime())
+                .lastContracted(Period.between(tag.getLastContractedDateTime().toLocalDate(), LocalDate.now()).getDays())
+                .contractCycle(tag.getContractCycle())
+                .friendNumber(friendTagService.countFriendTagByTag(tag))
+                .build()).collect(Collectors.toList());
+    }
+
     @GetMapping
     public List<TagResponse> getTag(@Login Account account) {
         return tagService.findByAccount(account).stream().map(tag -> TagResponse.builder()
                 .id(tag.getId())
                 .name(tag.getName())
                 .lastContractedDateTime(tag.getLastContractedDateTime())
+                .lastContracted(Period.between(tag.getLastContractedDateTime().toLocalDate(), LocalDate.now()).getDays())
                 .contractCycle(tag.getContractCycle())
                 .friendNumber(friendTagService.countFriendTagByTag(tag))
                 .build()).collect(Collectors.toList());
@@ -74,5 +89,12 @@ public class TagController {
                     .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                     .build();
         }).collect(Collectors.toList());
+    }
+
+
+    @PostMapping("/{tagId}/contact")
+    public String contactTag(@Login Account account, @PathVariable Long tagId){
+        tagService.contact(tagId, account);
+        return "ok";
     }
 }

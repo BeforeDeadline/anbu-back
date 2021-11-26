@@ -28,7 +28,7 @@ public class FriendController {
     private final TagService tagService;
 
     @GetMapping
-    public List<FriendResponse> getFriendsList (@Login Account account) {
+    public List<FriendResponse> getFriendsList(@Login Account account) {
 
         return friendService.findByAccount(account).stream().map((friend) -> {
             return FriendResponse.builder()
@@ -52,7 +52,7 @@ public class FriendController {
     }
 
     @GetMapping("/{friendId}")
-    public FriendResponse getFriend(@Login Account account, @PathVariable Long friendId){
+    public FriendResponse getFriend(@Login Account account, @PathVariable Long friendId) {
         Friend friend = friendService.findById(friendId, account);
         return FriendResponse.builder()
                 .id(friend.getId())
@@ -62,7 +62,7 @@ public class FriendController {
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                 .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
-                        return TagResponse.builder()
+                    return TagResponse.builder()
                             .id(tag.getId())
                             .name(tag.getName())
                             .lastContractedDateTime(tag.getLastContractedDateTime())
@@ -74,7 +74,7 @@ public class FriendController {
     }
 
     @PostMapping
-    public Long createFriend (@Login Account account, @Validated @RequestBody FriendCreateRequest friendCreateRequest, BindingResult bindingResult) {
+    public Long createFriend(@Login Account account, @Validated @RequestBody FriendCreateRequest friendCreateRequest, BindingResult bindingResult) {
         Friend friend = Friend.builder()
                 .name(friendCreateRequest.getName())
                 .phoneNumber(friendCreateRequest.getPhoneNumber())
@@ -89,8 +89,8 @@ public class FriendController {
         return friend.getId();
     }
 
-    @GetMapping("/dday")
-    public List<FriendResponse> getDDayFriends(@Login Account account){
+    @GetMapping("/d-day")
+    public List<FriendResponse> getDDayFriends(@Login Account account) {
         return friendService.findAllDDay(account).stream().map(friend -> FriendResponse.builder()
                 .id(friend.getId())
                 .name(friend.getName())
@@ -111,7 +111,7 @@ public class FriendController {
     }
 
     @GetMapping("/birthday")
-    public List<FriendResponse> getBirthDay(@Login Account account){
+    public List<FriendResponse> getBirthDay(@Login Account account) {
         return friendService.findBirthday(account).stream().map(friend -> FriendResponse.builder()
                 .id(friend.getId())
                 .name(friend.getName())
@@ -129,5 +129,11 @@ public class FriendController {
                             .build();
                 }).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
+    }
+
+    @PostMapping("/{friendId}/contact")
+    public String contactFriend(@Login Account account, @PathVariable Long friendId){
+        friendService.contact(friendId, account);
+        return "ok";
     }
 }

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,5 +55,19 @@ public class TagService {
         Friend friend = friendService.findById(friendId, account);
         List<FriendTag> friendTags = friendTagService.findByFriend(friend);
         return friendTags.stream().map(FriendTag::getTag).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void contact(Long tagId, Account account) {
+        Tag tag = findById(tagId);
+        tag.contact();
+    }
+
+    public List<Tag> findAllDDayTags(Account account) {
+        return findByAccount(account).stream().filter(tag -> {
+            return tag.getLastContractedDateTime()
+                    .plus(tag.getContractCycle(), ChronoUnit.DAYS)
+                    .isBefore(LocalDateTime.now());
+        }).collect(Collectors.toList());
     }
 }

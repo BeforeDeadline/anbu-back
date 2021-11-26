@@ -49,4 +49,10 @@ public class FriendService {
             return birthdate.isEqual(now);
         }).collect(Collectors.toList());
     }
+
+    @Transactional
+    public void contact(Long friendId, Account account) {
+        Friend friend = findById(friendId, account);
+        friend.contact();
+    }
 }
