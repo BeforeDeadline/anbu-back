@@ -23,9 +23,3 @@ server:
   ssl:
     key-store: anbu.sleepy-developer.com.jks
     key-store-password: ph56ph
-
-
-  servlet:
-    session:
-      cookie:
-        http-only: false
