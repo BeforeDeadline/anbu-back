@@ -1,10 +1,11 @@
 package com.beforedeadline.anbuback.web.tag;
 
 import com.beforedeadline.anbuback.domain.account.Account;
-import com.beforedeadline.anbuback.domain.tag.FriendTag;
-import com.beforedeadline.anbuback.domain.tag.FriendTagService;
-import com.beforedeadline.anbuback.domain.tag.Tag;
-import com.beforedeadline.anbuback.domain.tag.TagService;
+import com.beforedeadline.anbuback.domain.tag.entity.FriendTag;
+import com.beforedeadline.anbuback.domain.tag.service.FriendTagService;
+import com.beforedeadline.anbuback.domain.tag.entity.Tag;
+import com.beforedeadline.anbuback.domain.tag.service.TagQueryService;
+import com.beforedeadline.anbuback.domain.tag.service.TagService;
 import com.beforedeadline.anbuback.web.account.annotation.Login;
 import com.beforedeadline.anbuback.web.friend.dto.FriendResponse;
 import com.beforedeadline.anbuback.web.tag.dto.SaveFriendToTagRequest;
@@ -24,13 +25,14 @@ import java.util.stream.Collectors;
 public class TagController {
 
     private final TagService tagService;
+    private final TagQueryService tagQueryService;
     private final FriendTagService friendTagService;
 
     // todo 태그 상세조회
 
     @GetMapping("/d-day")
     public List<TagResponse> getDDayTag(@Login Account account) {
-        return tagService.findAllDDayTags(account).stream().map(tag -> TagResponse.builder()
+        return tagQueryService.findAllDDayTags(account).stream().map(tag -> TagResponse.builder()
                 .id(tag.getId())
                 .name(tag.getName())
                 .lastContractedDateTime(tag.getLastContractedDateTime())
@@ -42,7 +44,7 @@ public class TagController {
 
     @GetMapping
     public List<TagResponse> getTag(@Login Account account) {
-        return tagService.findByAccount(account).stream().map(tag -> TagResponse.builder()
+        return tagQueryService.findByAccount(account).stream().map(tag -> TagResponse.builder()
                 .id(tag.getId())
                 .name(tag.getName())
                 .lastContractedDateTime(tag.getLastContractedDateTime())
@@ -78,7 +80,7 @@ public class TagController {
 
     @GetMapping("/{tagId}")
     public List<FriendResponse> friendFromTag(@Login Account account, @PathVariable Long tagId) {
-        return tagService.findFriendFromTag(tagId).stream().map(friend -> {
+        return tagQueryService.findFriendFromTag(tagId, account.getId()).stream().map(friend -> {
             return FriendResponse.builder()
                     .id(friend.getId())
                     .name(friend.getName())
@@ -94,7 +96,7 @@ public class TagController {
 
     @PostMapping("/{tagId}/contact")
     public String contactTag(@Login Account account, @PathVariable Long tagId){
-        tagService.contact(tagId, account);
+        tagService.contact(tagId, account.getId());
         return "ok";
     }
 }

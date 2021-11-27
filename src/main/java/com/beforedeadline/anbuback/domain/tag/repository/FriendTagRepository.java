@@ -1,12 +1,13 @@
-package com.beforedeadline.anbuback.domain.tag;
+package com.beforedeadline.anbuback.domain.tag.repository;
 
 import com.beforedeadline.anbuback.domain.friend.Friend;
+import com.beforedeadline.anbuback.domain.tag.entity.FriendTag;
+import com.beforedeadline.anbuback.domain.tag.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface FriendTagRepository extends JpaRepository<FriendTag, Long> {

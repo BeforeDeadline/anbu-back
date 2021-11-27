@@ -1,6 +1,7 @@
-package com.beforedeadline.anbuback.domain.tag;
+package com.beforedeadline.anbuback.domain.tag.repository;
 
 import com.beforedeadline.anbuback.domain.account.Account;
+import com.beforedeadline.anbuback.domain.tag.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

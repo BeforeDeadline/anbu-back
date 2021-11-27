@@ -3,7 +3,7 @@ package com.beforedeadline.anbuback.web.friend;
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.friend.Friend;
 import com.beforedeadline.anbuback.domain.friend.FriendService;
-import com.beforedeadline.anbuback.domain.tag.TagService;
+import com.beforedeadline.anbuback.domain.tag.service.TagQueryService;
 import com.beforedeadline.anbuback.web.account.annotation.Login;
 import com.beforedeadline.anbuback.web.friend.dto.FriendCreateRequest;
 import com.beforedeadline.anbuback.web.friend.dto.FriendResponse;
@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 public class FriendController {
 
     private final FriendService friendService;
-    private final TagService tagService;
+    private final TagQueryService tagQueryService;
 
     @GetMapping
     public List<FriendResponse> getFriendsList(@Login Account account) {
@@ -39,7 +38,7 @@ public class FriendController {
                     .lastContactedDate(friend.getLastContactedDate())
                     .birthday(friend.getBirthday())
                     .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
-                    .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                    .tags(tagQueryService.findByFriend(friend.getId(), account).stream().map(tag -> {
                         return TagResponse.builder()
                                 .id(tag.getId())
                                 .name(tag.getName())
@@ -61,7 +60,7 @@ public class FriendController {
                 .contractCycle(friend.getContactCycle())
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
-                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                .tags(tagQueryService.findByFriend(friend.getId(), account).stream().map(tag -> {
                     return TagResponse.builder()
                             .id(tag.getId())
                             .name(tag.getName())
@@ -99,7 +98,7 @@ public class FriendController {
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                 .birthday(friend.getBirthday())
-                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                .tags(tagQueryService.findByFriend(friend.getId(), account).stream().map(tag -> {
                     return TagResponse.builder()
                             .id(tag.getId())
                             .name(tag.getName())
@@ -120,7 +119,7 @@ public class FriendController {
                 .lastContactedDate(friend.getLastContactedDate())
                 .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
                 .birthday(friend.getBirthday())
-                .tags(tagService.findByFriend(friend.getId(), account).stream().map(tag -> {
+                .tags(tagQueryService.findByFriend(friend.getId(), account).stream().map(tag -> {
                     return TagResponse.builder()
                             .id(tag.getId())
                             .name(tag.getName())

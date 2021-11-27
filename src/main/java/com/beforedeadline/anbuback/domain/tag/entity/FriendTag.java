@@ -1,6 +1,7 @@
-package com.beforedeadline.anbuback.domain.tag;
+package com.beforedeadline.anbuback.domain.tag.entity;
 
 import com.beforedeadline.anbuback.domain.friend.Friend;
+import com.beforedeadline.anbuback.domain.tag.entity.Tag;
 import lombok.*;
 
 import javax.persistence.*;

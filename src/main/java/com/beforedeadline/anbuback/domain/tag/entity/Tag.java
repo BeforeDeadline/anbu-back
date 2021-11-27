@@ -1,4 +1,4 @@
-package com.beforedeadline.anbuback.domain.tag;
+package com.beforedeadline.anbuback.domain.tag.entity;
 
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.common.Period;

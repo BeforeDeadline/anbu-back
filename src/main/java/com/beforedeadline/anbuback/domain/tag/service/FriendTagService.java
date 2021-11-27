@@ -1,6 +1,9 @@
-package com.beforedeadline.anbuback.domain.tag;
+package com.beforedeadline.anbuback.domain.tag.service;
 
 import com.beforedeadline.anbuback.domain.friend.Friend;
+import com.beforedeadline.anbuback.domain.tag.entity.FriendTag;
+import com.beforedeadline.anbuback.domain.tag.repository.FriendTagRepository;
+import com.beforedeadline.anbuback.domain.tag.entity.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
