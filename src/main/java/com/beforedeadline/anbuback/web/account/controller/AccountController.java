@@ -1,7 +1,7 @@
 package com.beforedeadline.anbuback.web.account.controller;
 
 import com.beforedeadline.anbuback.domain.account.Account;
-import com.beforedeadline.anbuback.domain.account.AccountService;
+import com.beforedeadline.anbuback.domain.account.service.AccountService;
 import com.beforedeadline.anbuback.web.account.dto.SignInRequest;
 import com.beforedeadline.anbuback.web.account.dto.SignInResponse;
 import lombok.RequiredArgsConstructor;

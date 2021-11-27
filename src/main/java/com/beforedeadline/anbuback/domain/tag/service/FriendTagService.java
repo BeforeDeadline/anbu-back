@@ -17,16 +17,16 @@ public class FriendTagService {
 
     private final FriendTagRepository friendTagRepository;
 
-    public Long countFriendTagByTag(Tag tag){
-        return friendTagRepository.countFriendTagByTag(tag);
+    public Long countFriendTagByTag(Long tagId){
+        return friendTagRepository.countFriendTagByTag(tagId);
     }
 
-    public List<FriendTag> findByTag(Tag tag){
-        return friendTagRepository.findByTag(tag);
+    public List<FriendTag> findByTag(Long tagId){
+        return friendTagRepository.findByTag(tagId);
     }
 
-    public List<FriendTag> findByFriend(Friend friend) {
-        return friendTagRepository.findByFriend(friend);
+    public List<FriendTag> findByFriend(Long friendId) {
+        return friendTagRepository.findByFriend(friendId);
     }
 
     @Transactional

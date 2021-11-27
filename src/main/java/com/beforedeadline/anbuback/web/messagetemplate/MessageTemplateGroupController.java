@@ -9,7 +9,6 @@ import com.beforedeadline.anbuback.web.messagetemplate.dto.MessageTemplateGroupR
 import com.beforedeadline.anbuback.web.messagetemplate.dto.MessageTemplateGroupResponse;
 import com.beforedeadline.anbuback.web.messagetemplate.dto.MessageTemplateSituationResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class MessageTemplateGroupController {
 
     @GetMapping
     public List<MessageTemplateGroupResponse> getGroups(@Login Account account) {
-        return messageTemplateGroupService.findByAccount(account).stream().map(mtg -> MessageTemplateGroupResponse.builder()
+        return messageTemplateGroupService.findByAccount(account.getId()).stream().map(mtg -> MessageTemplateGroupResponse.builder()
                 .id(mtg.getId())
                 .name(mtg.getName())
                 .messageTemplateSituationResponses(

@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Account extends Period {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
     private Long id;
 
     @Column(unique = true, nullable = false)

@@ -12,9 +12,12 @@ import java.util.List;
 @Repository
 public interface FriendTagRepository extends JpaRepository<FriendTag, Long> {
 
-    @Query("select count(ft) from FriendTag ft where ft.tag=:tag")
-    public Long countFriendTagByTag(Tag tag);
+    @Query("select count(ft) from FriendTag ft where ft.tag.id=:tagId")
+    public Long countFriendTagByTag(Long tagId);
 
-    public List<FriendTag> findByFriend(Friend friend);
-    public List<FriendTag> findByTag(Tag friend);
+    @Query("select ft from FriendTag ft where ft.friend.id=:friendId")
+    public List<FriendTag> findByFriend(Long friendId);
+
+    @Query("select ft from FriendTag ft where ft.tag.id=:tagId")
+    public List<FriendTag> findByTag(Long tagId);
 }

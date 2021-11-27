@@ -22,8 +22,8 @@ public class MessageTemplateGroupService {
         return groupRepository.save(messageTemplateGroup);
     }
 
-    public List<MessageTemplateGroup> findByAccount(Account account) {
-        return groupRepository.findByAccount(account);
+    public List<MessageTemplateGroup> findByAccount(Long accountId) {
+        return groupRepository.findByAccount(accountId);
     }
 
     public MessageTemplateGroup findById(Long groupId) {

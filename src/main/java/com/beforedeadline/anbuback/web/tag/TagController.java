@@ -32,25 +32,25 @@ public class TagController {
 
     @GetMapping("/d-day")
     public List<TagResponse> getDDayTag(@Login Account account) {
-        return tagQueryService.findAllDDayTags(account).stream().map(tag -> TagResponse.builder()
+        return tagQueryService.findAllDDayTags(account.getId()).stream().map(tag -> TagResponse.builder()
                 .id(tag.getId())
                 .name(tag.getName())
                 .lastContractedDateTime(tag.getLastContractedDateTime())
                 .lastContracted(Period.between(tag.getLastContractedDateTime().toLocalDate(), LocalDate.now()).getDays())
                 .contractCycle(tag.getContractCycle())
-                .friendNumber(friendTagService.countFriendTagByTag(tag))
+                .friendNumber(friendTagService.countFriendTagByTag(tag.getId()))
                 .build()).collect(Collectors.toList());
     }
 
     @GetMapping
     public List<TagResponse> getTag(@Login Account account) {
-        return tagQueryService.findByAccount(account).stream().map(tag -> TagResponse.builder()
+        return tagQueryService.findByAccount(account.getId()).stream().map(tag -> TagResponse.builder()
                 .id(tag.getId())
                 .name(tag.getName())
                 .lastContractedDateTime(tag.getLastContractedDateTime())
                 .lastContracted(Period.between(tag.getLastContractedDateTime().toLocalDate(), LocalDate.now()).getDays())
                 .contractCycle(tag.getContractCycle())
-                .friendNumber(friendTagService.countFriendTagByTag(tag))
+                .friendNumber(friendTagService.countFriendTagByTag(tag.getId()))
                 .build()).collect(Collectors.toList());
     }
 
@@ -74,13 +74,13 @@ public class TagController {
         Long friendId = saveFriendToTagRequest.getFriendId();
         Long tagId = saveFriendToTagRequest.getTagId();
 
-        FriendTag friendTag = tagService.saveFriendToTag(friendId, tagId, account);
+        FriendTag friendTag = tagService.saveFriendToTag(friendId, tagId, account.getId());
         return friendTag.getId();
     }
 
     @GetMapping("/{tagId}")
     public List<FriendResponse> friendFromTag(@Login Account account, @PathVariable Long tagId) {
-        return tagQueryService.findFriendFromTag(tagId, account.getId()).stream().map(friend -> {
+        return tagQueryService.findFriendFromTag(tagId).stream().map(friend -> {
             return FriendResponse.builder()
                     .id(friend.getId())
                     .name(friend.getName())

@@ -4,7 +4,6 @@ import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.account.exception.WrongOwnerException;
 import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import com.beforedeadline.anbuback.domain.friend.Friend;
-import com.beforedeadline.anbuback.domain.friend.FriendService;
 import com.beforedeadline.anbuback.domain.tag.entity.FriendTag;
 import com.beforedeadline.anbuback.domain.tag.entity.Tag;
 import com.beforedeadline.anbuback.domain.tag.repository.TagRepository;
@@ -24,10 +23,9 @@ public class TagQueryService {
 
     private final TagRepository tagRepository;
     private final FriendTagService friendTagService;
-    private final FriendService friendService;
 
-    public List<Tag> findByAccount(Account account) {
-        return tagRepository.findByAccount(account);
+    public List<Tag> findByAccount(Long accountId) {
+        return tagRepository.findByAccount(accountId);
     }
 
     public Tag findById(Long tagId, Long accountId) {
@@ -41,20 +39,18 @@ public class TagQueryService {
         return tag;
     }
 
-    public List<Friend> findFriendFromTag(Long tagId, Long accountId){
-        Tag tag = findById(tagId, accountId);
-        List<FriendTag> friendTags = friendTagService.findByTag(tag);
+    public List<Friend> findFriendFromTag(Long tagId){
+        List<FriendTag> friendTags = friendTagService.findByTag(tagId);
         return friendTags.stream().map(FriendTag::getFriend).collect(Collectors.toList());
     }
 
-    public List<Tag> findByFriend(Long friendId, Account account) {
-        Friend friend = friendService.findById(friendId, account);
-        List<FriendTag> friendTags = friendTagService.findByFriend(friend);
+    public List<Tag> findByFriend(Long friendId) {
+        List<FriendTag> friendTags = friendTagService.findByFriend(friendId);
         return friendTags.stream().map(FriendTag::getTag).collect(Collectors.toList());
     }
 
-    public List<Tag> findAllDDayTags(Account account) {
-        return findByAccount(account).stream().filter(tag -> {
+    public List<Tag> findAllDDayTags(Long accountId) {
+        return findByAccount(accountId).stream().filter(tag -> {
             LocalDate dDay = tag.getLastContractedDateTime().toLocalDate()
                     .plus(tag.getContractCycle(), ChronoUnit.DAYS);
 

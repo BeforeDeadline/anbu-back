@@ -1,12 +1,12 @@
-package com.beforedeadline.anbuback.domain.anniversary;
+package com.beforedeadline.anbuback.domain.anniversary.service;
 
-import com.beforedeadline.anbuback.domain.account.Account;
-import com.beforedeadline.anbuback.domain.account.AccountService;
 import com.beforedeadline.anbuback.domain.account.exception.WrongOwnerException;
+import com.beforedeadline.anbuback.domain.anniversary.Anniversary;
+import com.beforedeadline.anbuback.domain.anniversary.AnniversaryRepository;
 import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,17 +14,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AnniversaryService {
+@Transactional(readOnly = true)
+public class AnniversaryQueryService {
 
     private final AnniversaryRepository anniversaryRepository;
-    private final AccountService accountService;
 
-    public Anniversary save(Anniversary anniversary){
-        return anniversaryRepository.save(anniversary);
-    }
-
-    public List<Anniversary> findByAccount(Account account){
-        return anniversaryRepository.findByAccount(account);
+    public List<Anniversary> findByAccount(Long accountId){
+        return anniversaryRepository.findByAccount(accountId);
     }
 
     public Anniversary findById(Long anniversaryId, Long accountId){
@@ -35,10 +31,9 @@ public class AnniversaryService {
         return anniversary;
     }
 
-    public List<Anniversary> todayAnniversary(Long accountId){
-        return findByAccount(accountService.findById(accountId))
+    public List<Anniversary> findTodayAnniversary(Long accountId){
+        return findByAccount(accountId)
                 .stream().filter(anniversary -> anniversary.getDate().isEqual(LocalDate.now()))
                 .collect(Collectors.toList());
-
     }
 }

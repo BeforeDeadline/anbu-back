@@ -1,6 +1,5 @@
 package com.beforedeadline.anbuback;
 
-import com.beforedeadline.anbuback.domain.account.AccountService;
 import com.beforedeadline.anbuback.web.account.argumentresolver.LoginArgumentResolver;
 import com.beforedeadline.anbuback.web.account.interceptor.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;

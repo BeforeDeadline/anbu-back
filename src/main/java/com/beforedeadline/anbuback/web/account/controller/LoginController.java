@@ -1,11 +1,10 @@
 package com.beforedeadline.anbuback.web.account.controller;
 
 import com.beforedeadline.anbuback.domain.account.Account;
-import com.beforedeadline.anbuback.domain.account.AccountService;
+import com.beforedeadline.anbuback.domain.account.service.AccountService;
 import com.beforedeadline.anbuback.domain.account.exception.LoginRequiredException;
 import com.beforedeadline.anbuback.web.account.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;

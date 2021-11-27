@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class MessageTemplateSituation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "message_template_situation_id")
     private Long id;
 
     private String name;

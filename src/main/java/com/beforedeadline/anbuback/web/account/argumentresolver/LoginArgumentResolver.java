@@ -1,7 +1,7 @@
 package com.beforedeadline.anbuback.web.account.argumentresolver;
 
 import com.beforedeadline.anbuback.domain.account.Account;
-import com.beforedeadline.anbuback.domain.account.AccountService;
+import com.beforedeadline.anbuback.domain.account.service.AccountQueryService;
 import com.beforedeadline.anbuback.web.account.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final AccountService accountService;
+    private final AccountQueryService accountQueryService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -40,6 +40,6 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             return Optional.empty();
         }
 
-        return accountService.findById((Long) session.getAttribute("id"));
+        return accountQueryService.findById((Long) session.getAttribute("id"));
     }
 }

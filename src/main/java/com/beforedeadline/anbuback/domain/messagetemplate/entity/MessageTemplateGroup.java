@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class MessageTemplateGroup {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "message_template_group_id")
     private Long id;
 
     private String name;

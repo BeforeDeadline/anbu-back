@@ -2,7 +2,8 @@ package com.beforedeadline.anbuback.web.anniversary;
 
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.anniversary.Anniversary;
-import com.beforedeadline.anbuback.domain.anniversary.AnniversaryService;
+import com.beforedeadline.anbuback.domain.anniversary.service.AnniversaryQueryService;
+import com.beforedeadline.anbuback.domain.anniversary.service.AnniversaryService;
 import com.beforedeadline.anbuback.web.account.annotation.Login;
 import com.beforedeadline.anbuback.web.anniversary.dto.AnniversaryRequest;
 import com.beforedeadline.anbuback.web.anniversary.dto.AnniversaryResponse;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class AnniversaryController {
 
     private final AnniversaryService anniversaryService;
+    private final AnniversaryQueryService anniversaryQueryService;
 
     @PostMapping
     public Long save(@Login Account account, @RequestBody AnniversaryRequest anniversaryRequest) {
@@ -34,7 +36,7 @@ public class AnniversaryController {
 
     @GetMapping
     public List<AnniversaryResponse> findAllAnniversary(@Login Account account){
-        return anniversaryService.findByAccount(account).stream().map(anniversary ->
+        return anniversaryQueryService.findByAccount(account.getId()).stream().map(anniversary ->
                 AnniversaryResponse.builder()
                         .id(anniversary.getId())
                         .name(anniversary.getName())
@@ -44,7 +46,7 @@ public class AnniversaryController {
 
     @GetMapping("/{anniversaryId}")
     public AnniversaryResponse findOneAnniversary(@Login Account account, @PathVariable Long anniversaryId){
-        Anniversary anniversary = anniversaryService.findById(anniversaryId, account.getId());
+        Anniversary anniversary = anniversaryQueryService.findById(anniversaryId, account.getId());
         return AnniversaryResponse.builder()
                 .id(anniversary.getId())
                 .name(anniversary.getName())
@@ -54,7 +56,7 @@ public class AnniversaryController {
 
     @GetMapping("/today")
     public List<AnniversaryResponse> todayAnniversary(@Login Account account) {
-        return anniversaryService.todayAnniversary(account.getId()).stream().map(anniversary ->
+        return anniversaryQueryService.findTodayAnniversary(account.getId()).stream().map(anniversary ->
                 AnniversaryResponse.builder()
                         .id(anniversary.getId())
                         .name(anniversary.getName())

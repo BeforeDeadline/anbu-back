@@ -11,5 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, Long> {
-    List<Friend> findByAccount(Account account);
+
+    @Query("select f from Friend f where f.account.id=:accountId")
+    List<Friend> findByAccount(Long accountId);
 }

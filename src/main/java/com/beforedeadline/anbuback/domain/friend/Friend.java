@@ -19,6 +19,7 @@ import java.util.List;
 public class Friend extends Period {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "friend_id")
     private Long id;
 
     private String name;
