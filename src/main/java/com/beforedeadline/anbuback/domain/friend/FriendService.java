@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,8 +38,8 @@ public class FriendService {
 
     public List<Friend> findAllDDay(Account account){
         return repository.findByAccount(account).stream().filter(a -> {
-            LocalDateTime plus = a.getLastContactedDate().plus(a.getContactCycle(), ChronoUnit.DAYS);
-            return plus.isBefore(LocalDateTime.now());
+            LocalDate dDay = a.getLastContactedDate().toLocalDate().plus(a.getContactCycle(), ChronoUnit.DAYS);
+            return LocalDate.now().isEqual(dDay) || LocalDate.now().isAfter(dDay);
         }).collect(Collectors.toList());
     }
 
