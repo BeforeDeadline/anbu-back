@@ -4,6 +4,7 @@ import com.beforedeadline.anbuback.domain.messagetemplate.entity.MessageTemplate
 import com.beforedeadline.anbuback.domain.messagetemplate.entity.MessageTemplateSituation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
 @Repository
 public interface MessageTemplateSituationRepository extends JpaRepository<MessageTemplateSituation, Long> {
     @Query("select mts from MessageTemplateSituation mts where mts.messageTemplateGroup=:messageTemplateGroup")
-    List<MessageTemplateSituation> findByGroupId(MessageTemplateGroup messageTemplateGroup);
+    List<MessageTemplateSituation> findByGroupId(@Param("messageTemplateGroup") MessageTemplateGroup messageTemplateGroup);
 }

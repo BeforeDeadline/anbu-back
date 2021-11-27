@@ -10,6 +10,7 @@ import com.beforedeadline.anbuback.web.account.annotation.Login;
 import com.beforedeadline.anbuback.web.friend.dto.FriendResponse;
 import com.beforedeadline.anbuback.web.tag.dto.SaveFriendToTagRequest;
 import com.beforedeadline.anbuback.web.tag.dto.SaveTagRequest;
+import com.beforedeadline.anbuback.web.tag.dto.TagDetailResponse;
 import com.beforedeadline.anbuback.web.tag.dto.TagResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -79,9 +80,10 @@ public class TagController {
     }
 
     @GetMapping("/{tagId}")
-    public List<FriendResponse> friendFromTag(@Login Account account, @PathVariable Long tagId) {
-        return tagQueryService.findFriendFromTag(tagId).stream().map(friend -> {
-            return FriendResponse.builder()
+    public TagDetailResponse friendFromTag(@Login Account account, @PathVariable Long tagId) {
+
+        List<FriendResponse> friendResponses = tagQueryService.findFriendFromTag(tagId).stream().map(friend ->
+                FriendResponse.builder()
                     .id(friend.getId())
                     .name(friend.getName())
                     .phoneNumber(friend.getPhoneNumber())
@@ -89,8 +91,19 @@ public class TagController {
                     .lastContactedDate(friend.getLastContactedDate())
                     .birthday(friend.getBirthday())
                     .lastContracted(Period.between(friend.getLastContactedDate().toLocalDate(), LocalDate.now()).getDays())
-                    .build();
-        }).collect(Collectors.toList());
+                    .build()).collect(Collectors.toList());
+
+        Tag tag = tagQueryService.findById(tagId, account.getId());
+
+        return TagDetailResponse.builder()
+                .id(tag.getId())
+                .name(tag.getName())
+                .lastContractedDateTime(tag.getLastContractedDateTime())
+                .lastContracted(Period.between(tag.getLastContractedDateTime().toLocalDate(), LocalDate.now()).getDays())
+                .contractCycle(tag.getContractCycle())
+                .friendNumber(friendTagService.countFriendTagByTag(tag.getId()))
+                .friendResponses(friendResponses)
+                .build();
     }
 
 
