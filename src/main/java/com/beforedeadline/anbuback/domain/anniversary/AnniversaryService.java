@@ -2,6 +2,8 @@ package com.beforedeadline.anbuback.domain.anniversary;
 
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.account.AccountService;
+import com.beforedeadline.anbuback.domain.account.exception.WrongOwnerException;
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,9 @@ public class AnniversaryService {
     }
 
     public Anniversary findById(Long anniversaryId, Long accountId){
-        Anniversary anniversary = anniversaryRepository.findById(anniversaryId).orElseThrow(() -> new IllegalArgumentException("잘못된 anniversary id입력"));
+        Anniversary anniversary = anniversaryRepository.findById(anniversaryId).orElseThrow(() -> new NotFoundDataException("anniversaryId", String.valueOf(anniversaryId)));
         if(!anniversary.getAccount().getId().equals(accountId)){
-            throw new IllegalArgumentException("해당 account 소유의 anniversary id를 입력하세요");
+            throw new WrongOwnerException("anniversary");
         }
         return anniversary;
     }

@@ -1,6 +1,7 @@
 package com.beforedeadline.anbuback.domain.tag;
 
 import com.beforedeadline.anbuback.domain.account.Account;
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import com.beforedeadline.anbuback.domain.friend.Friend;
 import com.beforedeadline.anbuback.domain.friend.FriendService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class TagService {
     }
 
     public Tag findById(Long tagId) {
-        return tagRepository.findById(tagId).orElseThrow(() -> new IllegalArgumentException("잘못된 tag id입력"));
+        return tagRepository.findById(tagId).orElseThrow(() -> new NotFoundDataException("tagId", String.valueOf(tagId)));
     }
 
     @Transactional

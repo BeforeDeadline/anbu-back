@@ -1,5 +1,6 @@
 package com.beforedeadline.anbuback.domain.messagetemplate.service;
 
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import com.beforedeadline.anbuback.domain.messagetemplate.entity.MessageTemplateGroup;
 import com.beforedeadline.anbuback.domain.messagetemplate.entity.MessageTemplateSituation;
 import com.beforedeadline.anbuback.domain.messagetemplate.repository.MessageTemplateSituationRepository;
@@ -27,6 +28,6 @@ public class MessageTemplateSituationService {
     }
 
     public MessageTemplateSituation findById(Long id){
-        return messageTemplateSituationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("제대로된 situation id를 입력하세요"));
+        return messageTemplateSituationRepository.findById(id).orElseThrow(() -> new NotFoundDataException("situationId", String.valueOf(id)));
     }
 }

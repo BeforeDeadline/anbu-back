@@ -1,5 +1,6 @@
 package com.beforedeadline.anbuback.web.account.interceptor;
 
+import com.beforedeadline.anbuback.domain.account.exception.LoginRequiredException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
         if(session == null || session.getAttribute("id")==null){
-            throw new IllegalArgumentException("로그인이 되어있지 않습니다.");
+            throw new LoginRequiredException();
         }
         return true;
     }

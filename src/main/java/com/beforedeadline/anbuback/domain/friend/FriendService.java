@@ -1,6 +1,8 @@
 package com.beforedeadline.anbuback.domain.friend;
 
 import com.beforedeadline.anbuback.domain.account.Account;
+import com.beforedeadline.anbuback.domain.account.exception.WrongOwnerException;
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +30,9 @@ public class FriendService {
     }
 
     public Friend findById(Long friendId, Account account) {
-        Friend friend = repository.findById(friendId).orElseThrow(() -> new IllegalArgumentException("제대로 된 friend id를 밉력하세요"));
+        Friend friend = repository.findById(friendId).orElseThrow(() -> new NotFoundDataException("friendId", String.valueOf(friendId)));
         if(!friend.getAccount().getId().equals(account.getId())){
-            throw new IllegalArgumentException("자신이 가지고 있는 account만 get할 수 있습니다.");
+            throw new WrongOwnerException("friend");
         }
         return friend;
     }

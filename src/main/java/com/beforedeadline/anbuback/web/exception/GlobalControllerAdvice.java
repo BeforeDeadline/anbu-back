@@ -11,6 +11,6 @@ public class GlobalControllerAdvice {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e){
-        return new ErrorResult("Exception", e.getMessage());
+        return new ErrorResult(e.getClass().getSimpleName(), e.getMessage());
     }
 }

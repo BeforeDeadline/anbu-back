@@ -2,6 +2,7 @@ package com.beforedeadline.anbuback.web.account.controller;
 
 import com.beforedeadline.anbuback.domain.account.Account;
 import com.beforedeadline.anbuback.domain.account.AccountService;
+import com.beforedeadline.anbuback.domain.account.exception.LoginRequiredException;
 import com.beforedeadline.anbuback.web.account.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class LoginController {
     public ResponseEntity<String> logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session == null){
-            throw new IllegalArgumentException("로그인 해주세요");
+            throw new LoginRequiredException();
         }
         session.invalidate();
         return ResponseEntity.ok("ok");

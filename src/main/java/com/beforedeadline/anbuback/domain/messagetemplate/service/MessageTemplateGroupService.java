@@ -1,6 +1,7 @@
 package com.beforedeadline.anbuback.domain.messagetemplate.service;
 
 import com.beforedeadline.anbuback.domain.account.Account;
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import com.beforedeadline.anbuback.domain.messagetemplate.entity.MessageTemplateGroup;
 import com.beforedeadline.anbuback.domain.messagetemplate.repository.MessageTemplateGroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,6 @@ public class MessageTemplateGroupService {
     }
 
     public MessageTemplateGroup findById(Long groupId) {
-        return groupRepository.findById(groupId).orElseThrow(() -> new IllegalArgumentException("group ID를 제대로 입력하세요"));
+        return groupRepository.findById(groupId).orElseThrow(() -> new NotFoundDataException("groupId", String.valueOf(groupId)));
     }
 }

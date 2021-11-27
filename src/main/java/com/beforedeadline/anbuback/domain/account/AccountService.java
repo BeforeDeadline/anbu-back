@@ -1,5 +1,8 @@
 package com.beforedeadline.anbuback.domain.account;
 
+import com.beforedeadline.anbuback.domain.account.exception.WrongPasswordException;
+import com.beforedeadline.anbuback.domain.common.exception.DuplicateDataException;
+import com.beforedeadline.anbuback.domain.common.exception.NotFoundDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,10 @@ public class AccountService {
     @Transactional
     public void save(Account account){
         findByEmail(account.getEmail()).ifPresent((a) -> {
-            throw new IllegalArgumentException("이미 등록된 이메일입니다");
+            throw new DuplicateDataException("email", account.getEmail());
         });
         findByNickname(account.getNickname()).ifPresent((a) -> {
-            throw new IllegalArgumentException("이미 등록된 닉네임입니다");
+            throw new DuplicateDataException("nickname", account.getNickname());
         });
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -43,19 +46,19 @@ public class AccountService {
     }
 
     public Account findById(Long id){
-        return accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("account id를 제대로 입력하세요"));
+        return accountRepository.findById(id).orElseThrow(() -> new NotFoundDataException("accountId", String.valueOf(id)));
     }
 
     @Transactional
     public Account login(String email, String password){
-        Account account = findByEmail(email).orElseThrow(() -> new IllegalArgumentException("잘못된 이메일 입력"));
+        Account account = findByEmail(email).orElseThrow(() -> new NotFoundDataException("email", email));
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(password.getBytes());
             String inputDigest = new String(md.digest());
             if(!inputDigest.equals(account.getPassword())){
-                throw new IllegalArgumentException("잘못된 패스워드 입력");
+                throw new WrongPasswordException();
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
