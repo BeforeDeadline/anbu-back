@@ -12,7 +12,7 @@
 
 <br />
 
-# 서버 페이지
+# 서버 페이지 (현재 서비스 X)
 
 ### [https://anbu.sleepy-developer.com/](https://anbu.sleepy-developer.com/)
 
