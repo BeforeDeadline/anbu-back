@@ -8,19 +8,67 @@
 ![Jenkins badge](https://img.shields.io/badge/Jenkins-2.321-green)
 
 
->Anbu의 백엔드입니다
+>안부를 부담없이 쉽게 보낼 수 있는 앱 기반의 서비스, Anbu의 백엔드입니다
 
 <br />
 
-# 서버 페이지 (현재 서비스 X)
+# 팀원
+|김범준|윤준서|최다인|이시은|
+|:-:|:-:|:-:|:-:|
+|백엔드|프런트엔드|기획및디자인|기획및디자인|
+|[Github](https://github.com/KRBeomJunKim)|[Github](https://github.com/yoon-junseo)|||
 
-### [https://anbu.sleepy-developer.com/](https://anbu.sleepy-developer.com/)
+<br />
+
+# 기능
+
+<details>
+  <summary>회원</summary>
+
+  - [x] 회원가입
+  - [x] 로그인/로그아웃
+</details>
+
+<details>
+  <summary>기념일</summary>
+
+  - [x] 기념일 조회/생성
+</details>
+
+
+<details>
+  <summary>친구</summary>
+
+  - [x] 친구 생성/조회
+  - [x] 오늘 생일인 친구 조회
+</details>
+
+<details>
+  <summary>태그</summary>
+
+  - [x] 태그 조회/생성
+  - [x] 친구에게 태그 붙이기
+  - [x] 태그인 친구 조회하기
+</details>
+
+
+<details>
+  <summary>메시지 탬플릿</summary>
+
+  - [x] 메시지 템플릿 조회/생성
+</details>
 
 <br />
 
 # 백엔드 시스템 아키텍쳐
 
 ![img.png](https://user-images.githubusercontent.com/28554873/143726153-fe906ed3-f717-4eb6-8621-8698ba9d772d.jpg)
+
+<br />
+
+# ERD
+![anbu](https://user-images.githubusercontent.com/28554873/194066271-9d32b336-ef5d-4ab7-b384-6cc6085fd4a2.png)
+
 
 
 
